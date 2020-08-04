@@ -1,0 +1,67 @@
+
+#logo {
+    position: absolute;
+    left: 50%;
+    top:-80%;
+    margin-left: -84px !important;  /* 50% of your logo width */
+    display: block;
+}
+
+.navbar-brand {
+  color: #fff;
+}
+
+.navbar{
+background-color: transparent !important;
+}
+
+  .page-container {
+    background: #ffffff;
+    color: #000;
+      header {
+          font-size: 14px;
+          font-weight: bold;
+          display: flex;
+          justify-content: space-between;
+
+
+          .menu-button {
+              margin-right: 24px;
+              min-width: 0;
+              padding: 0;
+              line-height: normal;
+          }
+          .app-title {
+              padding: 0 3px;
+          }
+      }
+  }
+hr {
+  height: 2px;
+  width: 80%;
+  left: 50%;
+  background-color: black;
+}
+
+.sidenav-container {
+    flex: 1;
+    background-color: transparent !important;
+    z-index: 20;
+    .sidenav {
+        min-width: 240px;
+        position:relative;
+        display: flex;
+        flex-direction: column;
+        z-index: 2;
+
+        a {
+            display: block;
+            padding: 6px 24px;
+            width: 100%;
+            text-align: left;
+        }
+    }
+    main {
+        padding: 18px 24px;
+    }
+}
