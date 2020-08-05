@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
   fuenteMono1:any;
   sizeRaton = 0;
   //st = 'Ornitorrin-cut, es un proyecto multidisciplinario, nacido  de la reunión de distintas  naturalezas en equilibrio, destinado a crear piezas y alimentos visuales de alta gama    S u i    g e n e r i s.';
-  st = "Ornitorrincut: \n\nConfección de universos visuales";
+  st = "Ornitorrincut:";
+  st2="Confección de universos visuales";
 
 
   constructor() { }
@@ -61,9 +62,13 @@ export class HeaderComponent implements OnInit {
       s.draw = () => {
       s.background(255);
       //s.fill('#ED225D');
-      s.textFont(this.fuenteMono1);
-      s.textSize(s.windowWidth/32);
-      s.text(this.st, s.windowWidth/10, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
+      s.textStyle(s.ITALIC);
+      s.textSize(s.windowWidth/28);
+      s.text(this.st, s.windowWidth/11, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
+      s.textStyle(s.NORMAL);
+      s.textSize(s.windowWidth/30);
+      s.text(this.st2, (s.windowWidth/9)*3, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
+
       s.ellipse(s.mouseX, s.mouseY, this.sizeRaton, this.sizeRaton);
 
     for(let j = 0;j<this.particles.length;j++){
