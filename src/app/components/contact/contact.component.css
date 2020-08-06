@@ -1,0 +1,17 @@
+.card
+{
+  border: none;
+  background-color: transparent !important;
+}
+
+.container
+{
+padding-top:  150px;
+padding-bottom: 150px;
+
+}
+
+h1{
+padding-bottom: 3em;
+
+}

@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
 
 
       s.setup = () => {
-        let canvas2 = s.createCanvas(s.windowWidth-20, s.windowHeight*5);
+        let canvas2 = s.createCanvas(s.windowWidth-20, s.windowHeight*3);
         canvas2.parent('sketch-holder');
         canvas2.position(0,0);
         canvas2.style("z-index : -1");
@@ -69,7 +69,14 @@ export class HeaderComponent implements OnInit {
       s.textSize(s.windowWidth/30);
       s.text(this.st2, (s.windowWidth/9)*3, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
 
-      s.ellipse(s.mouseX, s.mouseY, this.sizeRaton, this.sizeRaton);
+      if(s.mouseY > s.windowHeight + 20 && s.mouseY < s.windowHeight*2 + 20)
+      {
+        s.triangle(s.mouseX - this.sizeRaton/2, s.mouseY + this.sizeRaton/2, s.mouseX + this.sizeRaton/2, s.mouseY + this.sizeRaton/2, s.mouseX, s.mouseY - this.sizeRaton/2);
+      }
+      else
+      {
+        s.ellipse(s.mouseX, s.mouseY, this.sizeRaton, this.sizeRaton);
+      }
 
     for(let j = 0;j<this.particles.length;j++){
     this.particles[j].createParticle();

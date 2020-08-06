@@ -1,6 +1,7 @@
 import { Component , AfterViewInit} from '@angular/core';
 import anime from 'animejs'
 declare var anime: any;
+import sal from 'sal.js'
 
 
 @Component({
@@ -14,7 +15,9 @@ export class AppComponent implements AfterViewInit  {
 
 ngAfterViewInit(): void {
 
-
+sal({
+//  once: false,
+});
   }
 
 }
