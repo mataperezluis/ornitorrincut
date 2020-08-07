@@ -2,6 +2,7 @@ import { Component , AfterViewInit} from '@angular/core';
 import anime from 'animejs'
 declare var anime: any;
 import sal from 'sal.js'
+import jump from 'jump.js'
 
 
 @Component({
@@ -19,5 +20,6 @@ sal({
 //  once: false,
 });
   }
+
 
 }

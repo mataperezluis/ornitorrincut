@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef , HostListener , AfterViewInit} from '@angular/core';
 import p5 from "p5";
 import {Particle} from './particles'
+import jump from 'jump.js';
+import { ServicioService } from '../../servicio.service';
 
 @Component({
   selector: 'app-header',
@@ -12,9 +14,7 @@ export class HeaderComponent implements OnInit {
 
   public isMenuOpen: boolean = false;
   sticky: boolean = false;
-  elementPosition: any;
 
-  @ViewChild('stickyHr') menuElement: ElementRef;
 
   canvas: any;
   sw = 2;
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   st2="Confección de universos visuales";
 
 
-  constructor() { }
+  constructor(private servicioService: ServicioService) { }
 
   ngOnInit(): void {
 
@@ -102,19 +102,9 @@ export class HeaderComponent implements OnInit {
   public onSidenavClick(): void {
     this.isMenuOpen = false;
   }
-
-  ngAfterViewInit(){
-    this.elementPosition = this.menuElement.nativeElement.offsetTop;
+  public onClickScrollRaton() {
+    jump(this.servicioService.getData());
   }
 
-  @HostListener('window:scroll', ['$event'])
-   handleScroll(){
-     const windowScroll = window.pageYOffset;
-     if(windowScroll >= this.elementPosition){
-       this.sticky = true;
-     } else {
-       this.sticky = false;
-     }
-   }
 
 }

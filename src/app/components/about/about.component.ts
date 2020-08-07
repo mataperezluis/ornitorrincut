@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef , HostListener , AfterViewInit } from '@angular/core';
+import { ServicioService} from '../../servicio.service';
 
 @Component({
   selector: 'app-about',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+    elementPosition: any;
+
+    @ViewChild('tituloAbout') aboutTituloElement: ElementRef;
+
+  constructor(private servicioService: ServicioService) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(){
+    this.elementPosition = this.aboutTituloElement.nativeElement.offsetTop;
+    this.servicioService.setData(this.elementPosition - 90);
   }
 
 }

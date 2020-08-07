@@ -28,7 +28,6 @@
 
         <a mat-list-item [routerLink]="'/about'"> Quienes Somos </a>
         <a mat-list-item [routerLink]="'/Trabajos'"> Trabajos </a>
-        <a mat-list-item [routerLink]="'/Actividades'"> Actividades </a>
         <a mat-list-item [routerLink]="'/Contacto'"> Contacto </a>
 
       </mat-nav-list>
@@ -44,7 +43,7 @@
 
 
 
-  <a href="#portfolio-section" class="mouse-wrap smoothscroll">
+  <a href="#portfolio-section" class="mouse-wrap smoothscroll" (click)="onClickScrollRaton()" >
             <span class="mouse">
               <span class="scroll"></span>
             </span>

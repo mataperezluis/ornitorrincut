@@ -13,6 +13,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AboutComponent } from './components/about/about.component';
 import { WorksComponent } from './components/works/works.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { ServicioService} from './servicio.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { ContactComponent } from './components/contact/contact.component';
     MatButtonModule,
     MatListModule
   ],
-  providers: [],
+  providers: [ServicioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
