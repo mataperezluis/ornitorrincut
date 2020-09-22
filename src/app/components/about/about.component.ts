@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef , HostListener , AfterViewInit } from '@angular/core';
 import { ServicioService} from '../../servicio.service';
+import * as THREE from 'three';
 
 @Component({
   selector: 'app-about',

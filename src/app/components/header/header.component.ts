@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
+
 ///----------------------------------
     // this sketch was modified from the original
     // https://editor.p5js.org/Janglee123/sketches/HJ2RnrQzN
@@ -47,11 +48,11 @@ export class HeaderComponent implements OnInit {
 
 
       s.setup = () => {
-        let canvas2 = s.createCanvas(s.windowWidth-20, s.windowHeight*3);
+        let canvas2 = s.createCanvas(s.windowWidth-20, s.windowHeight*4);
         canvas2.parent('sketch-holder');
         canvas2.position(0,0);
         canvas2.style("z-index : -1");
-        s.background(255);
+        s.background(10, 38, 53);
 
         for(let i = 0; i<s.windowWidth/40; i++){
             this.particles.push(new Particle(s));
@@ -60,7 +61,7 @@ export class HeaderComponent implements OnInit {
       };
 
       s.draw = () => {
-      s.background(255);
+      s.background(10, 38, 53);
       //s.fill('#ED225D');
       s.textStyle(s.ITALIC);
       s.textSize(s.windowWidth/28);
