@@ -2,8 +2,9 @@
 #logo {
     position: absolute;
     left: 50%;
-    top:15%;
-    margin-left: -84px !important;  /* 50% of your logo width */
+    top:5%;
+    max-width: 100%;
+    margin-left: -224px !important;  /* 50% of your logo width */
     display: block;
 }
 
@@ -60,6 +61,13 @@ hr {
     main {
         padding: 18px 24px;
     }
+}
+
+@media only screen and (max-width: 500px) {
+  #logo {
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 .mouse-wrap {
