@@ -9,12 +9,14 @@ export class Particle {
     xSpeed:number;
     ySpeed:number;
     altura:number;
+    shapeT:number;
   constructor(p5: p5){
     this._p5 = p5;
     this.altura = this._p5.windowHeight + this._p5.windowHeight/8;
     this.x = this._p5.random(0,this._p5.width);
     this.y = this._p5.random(0,this.altura);
     this.r = this._p5.random(4,8);
+    this.shapeT = this._p5.random(-2,2);
     this.xSpeed = this._p5.random(-4,4);
     this.ySpeed = this._p5.random(-2,3);
   }
@@ -23,7 +25,10 @@ export class Particle {
   createParticle() {
     this._p5.noStroke();
     this._p5.fill('rgba(250,247,247,0.5)');
-    this._p5.circle(this.x,this.y,this.r);
+    if(this.shapeT > 0 )
+      this._p5.square(this.x,this.y,this.r);
+    else
+      this._p5.circle(this.x,this.y,this.r);
   }
 
 // setting the particle in motion.
