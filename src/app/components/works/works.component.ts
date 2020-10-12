@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { EngineService } from './engine.service';
 
 
 @Component({
@@ -9,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorksComponent implements OnInit {
 
+  @ViewChild('rendererCanvas', {static: true})
+  public rendererCanvas: ElementRef<HTMLCanvasElement>;
 
-constructor() {
-
-}
+  public constructor(private engServ: EngineService) { }
 
   ngOnInit(): void {
+
+    this.engServ.createScene(this.rendererCanvas);
+    this.engServ.animate();
 
   }
 
