@@ -10,15 +10,25 @@ export class Particle {
     ySpeed:number;
     altura:number;
     shapeT:number;
+    alturaSegunda:number;
+    nivel:number;
   constructor(p5: p5){
     this._p5 = p5;
     this.altura = this._p5.windowHeight + this._p5.windowHeight/8;
-    this.x = this._p5.random(0,this._p5.width);
-    this.y = this._p5.random(0,this.altura);
+    this.alturaSegunda = this._p5.windowHeight*2;
     this.r = this._p5.random(4,8);
     this.shapeT = this._p5.random(-2,2);
+    this.nivel=0;
+    this.restartValues();
+  }
+
+  restartValues()
+  {
+    this.x = this._p5.random(0,this._p5.width);
+    this.y = this._p5.random(0,this.altura);
     this.xSpeed = this._p5.random(-4,4);
     this.ySpeed = this._p5.random(-2,3);
+
   }
 
 // creation of a particle.
@@ -33,10 +43,23 @@ export class Particle {
 
 // setting the particle in motion.
   moveParticle() {
-    if(this.x < 0 || this.x > this._p5.width)
+    if((this.x < 0 || this.x > this._p5.width) && this.nivel==0)
       this.xSpeed*=-1;
-    if(this.y < 0 || this.y > this.altura)
+    if((this.y < 0 || this.y > this.altura) && this.nivel==0)
       this.ySpeed*=-1;
+
+    if(this.nivel == 1)
+    {
+      this.xSpeed = 0;
+      this.ySpeed = this._p5.abs(this.ySpeed);
+
+      if(this.y > this.alturaSegunda - 10)
+      {
+          this.nivel = 0;
+          this.restartValues();
+      }
+    }
+
     this.x+=2*this.xSpeed;
     this.y+=2*this.ySpeed;
   }
@@ -53,6 +76,24 @@ export class Particle {
 
       }
   }
+
+  getPosx()
+  {
+    return this.x;
+  }
+
+  getPosy()
+  {
+    return this.y;
+
+  }
+
+  setForce()
+  {
+    this.nivel=1;
+
+  }
+
 
 // this function creates the connections(lines)
 // between particles which are less than a certain distance apart

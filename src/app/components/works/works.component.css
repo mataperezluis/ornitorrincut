@@ -4,3 +4,15 @@
   border: none;
   background-color: transparent !important;
 }
+
+p
+{
+  color: white;
+}
+
+h1
+{
+
+  padding-bottom: 3em;
+  color: white;
+}
