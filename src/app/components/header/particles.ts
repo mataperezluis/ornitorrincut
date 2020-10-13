@@ -1,4 +1,5 @@
 import p5 from "p5";
+import * as matter from 'matter-js';
 export class Particle {
 // setting the co-ordinates, radius and the
 // speed of a particle in both the co-ordinates axes.
@@ -12,6 +13,8 @@ export class Particle {
     shapeT:number;
     alturaSegunda:number;
     nivel:number;
+    _world:any;
+    particleBodie:any;
   constructor(p5: p5){
     this._p5 = p5;
     this.altura = this._p5.windowHeight + this._p5.windowHeight/8;
@@ -33,49 +36,52 @@ export class Particle {
 
 // creation of a particle.
   createParticle() {
+   
+    if(this.shapeT > 0 )
+    {
+      this.particleBodie = matter.Bodies.rectangle(this.x,this.y,this.r,this.r,{
+        collisionFilter: {
+            mask: 0x0001
+        }});
+    }else
+    {
+      this.particleBodie  = matter.Bodies.circle(this.x,this.y,this.r,{
+        collisionFilter: {
+            mask: 0x0001
+        }});
+    }
+
+    this.particleBodie.friction = 0;
+    this.particleBodie.frictionAir = 0;
+
+    return this.particleBodie;
+  }
+
+  dibujaParticula(valX:number,valY:number)
+  {
+
     this._p5.noStroke();
     this._p5.fill('rgba(250,247,247,0.5)');
+
     if(this.shapeT > 0 )
-      this._p5.square(this.x,this.y,this.r);
-    else
-      this._p5.circle(this.x,this.y,this.r);
+    {
+      this._p5.square(valX,valY,this.r);
+    }
+    else{
+      this._p5.circle(valX,valY,this.r);
+    }
   }
 
 // setting the particle in motion.
-  moveParticle() {
-    if((this.x < 0 || this.x > this._p5.width) && this.nivel==0)
-      this.xSpeed*=-1;
-    if((this.y < 0 || this.y > this.altura) && this.nivel==0)
-      this.ySpeed*=-1;
+  moveParticle(valX:number,valY:number) {
 
-    if(this.nivel == 1)
-    {
-      this.xSpeed = 0;
-      this.ySpeed = this._p5.abs(this.ySpeed);
-
-      if(this.y > this.alturaSegunda - 10)
-      {
-          this.nivel = 0;
-          this.restartValues();
-      }
-    }
-
-    this.x+=2*this.xSpeed;
-    this.y+=2*this.ySpeed;
+    var salida = false;
+    if((valX < -200 || valX > this._p5.width+200) || (valY < -200 || valY > this.altura+200))
+      salida = true;
+      
+    return salida;
   }
 
-  repulse() {
-      let dis = this._p5.dist(this.x,this.y,this._p5.mouseX,this._p5.mouseY);
-      if(dis<this._p5.windowWidth/30) {
-        if(this.x >= this._p5.mouseX)
-        this.xSpeed = -1 * this.xSpeed;
-        if(this.y > this._p5.mouseY)
-        this.ySpeed = -1 * this.ySpeed;
-        this.x+=2*this.xSpeed;
-        this.y+=2*this.ySpeed;
-
-      }
-  }
 
   getPosx()
   {
@@ -88,21 +94,31 @@ export class Particle {
 
   }
 
+  getR()
+  {
+    return this.r;
+
+  }
+
+  getShapeT()
+  {
+    return this.shapeT;
+  }
+
   setForce()
   {
     this.nivel=1;
 
   }
 
-
 // this function creates the connections(lines)
 // between particles which are less than a certain distance apart
-  joinParticles(particles) {
+  joinParticles(particulaActual,particles) {
     particles.forEach(element =>{
-      let dis = this._p5.dist(this.x,this.y,element.x,element.y);
-      if(dis<60) {
-        this._p5.stroke('rgba(250,247,247,0.5)');
-        this._p5.line(this.x,this.y,element.x,element.y);
+      let dis = this._p5.dist(particulaActual.x,particulaActual.y,element.position.x,element.position.y);
+      if(dis<180) {
+        this._p5.stroke('rgba(250,247,247,0.7)');
+        this._p5.line(particulaActual.x,particulaActual.y,element.position.x,element.position.y);
       }
     });
   }

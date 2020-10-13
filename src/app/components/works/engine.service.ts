@@ -62,6 +62,9 @@ export class EngineService implements OnDestroy {
     
             this.controls = new OrbitControls( this.camera, this.renderer.domElement );
             this.controls.enableZoom = false;
+            this.controls.enablePan = false;
+            this.controls.autoRotate = true;
+            this.controls.autoRotateSpeed = 100;
 
             this.scene.add( gltf.scene );
     
@@ -103,6 +106,7 @@ export class EngineService implements OnDestroy {
       window.addEventListener('resize', () => {
         this.resize();
       });
+      this.controls.update();
     });
   }
 

@@ -4,6 +4,7 @@ import {Particle} from './particles'
 import {Liquid} from './Liquid'
 import jump from 'jump.js';
 import { ServicioService } from '../../servicio.service';
+import * as matter from 'matter-js';
 
 @Component({
   selector: 'app-header',
@@ -31,6 +32,12 @@ export class HeaderComponent implements OnInit {
   st2="Confección de universos visuales";
   Liquido:any;
   contiene:any;
+  Engine:any;
+  world:any;
+  Bodies:any;
+  particulasMundo =[];
+  mouseCircular:any;
+  Body:any;
  
 
   constructor(private servicioService: ServicioService) { }
@@ -49,25 +56,46 @@ export class HeaderComponent implements OnInit {
         this.fuenteMono1 = s.loadFont("assets/fonts/RobotoMono-Regular.ttf");
         this.imgOrnitorrincut = s.loadImage('assets/logo.png');
         this.scala=0.4;
-
       }
 
 
       s.setup = () => {
-        let canvas2 = s.createCanvas(s.windowWidth+150, s.windowHeight*2);
+        let canvas2 = s.createCanvas(s.windowWidth, s.windowHeight*2);
         canvas2.parent('sketch-holder');
-        canvas2.position(-10,-10);
+        canvas2.position(0,0);
         canvas2.style("z-index : 1");
         s.background(5,25,36);
          // Create liquid object
         this.Liquido = new Liquid(s,s.windowWidth/2, s.windowHeight - s.windowHeight / 4, 
           s.windowWidth/16, s.windowHeight / 4, 0.02);
 
+        this.Engine = matter.Engine.create('sketch-holder');
+        this.world = this.Engine.world;
+        this.Body = matter.Body;
+
         s.image(this.imgOrnitorrincut, s.windowWidth/4, 10);
 
         for(let i = 0; i<s.windowWidth/60; i++){
             this.particles.push(new Particle(s));
+              
         }
+
+        for(let j = 0;j<this.particles.length;j++){
+
+          this.particulasMundo.push(this.particles[j].createParticle());
+          this.Body.applyForce( this.particulasMundo[j], {x: this.particulasMundo[j].position.x, y: this.particulasMundo[j].position.y}, {x: s.random(-0.001,0.001), y: s.random(-0.001,0.001)});
+
+        }
+              
+        this.world.gravity.y=0;
+        this.mouseCircular = matter.Bodies.circle(s.mouseX, s.mouseY, this.sizeRaton/2,{
+          collisionFilter: {
+              mask: 0x0001
+          }});
+
+        matter.World.add(this.world,this.particulasMundo);
+        matter.World.add(this.world,this.mouseCircular);    
+        matter.Engine.run(this.Engine);
 
       };
 
@@ -85,26 +113,48 @@ export class HeaderComponent implements OnInit {
       s.image(this.imgOrnitorrincut, s.windowWidth/2, s.windowHeight/4,this.scala*s.windowWidth, this.scala*this.imgOrnitorrincut.height*s.windowWidth/this.imgOrnitorrincut.width);
 
      // this.Liquido.display();
+
+     this.mouseCircular.position.x = s.mouseX;
+     this.mouseCircular.position.y = s.mouseY;
       
       if(s.mouseY > s.windowHeight + 20 && s.mouseY < s.windowHeight*2 + 20)
       {
-        s.triangle(s.mouseX - this.sizeRaton/2, s.mouseY + this.sizeRaton/2, s.mouseX + this.sizeRaton/2, s.mouseY + this.sizeRaton/2, s.mouseX, s.mouseY - this.sizeRaton/2);
+        s.triangle(this.mouseCircular.position.x - this.sizeRaton/2, this.mouseCircular.position.y + this.sizeRaton/2, this.mouseCircular.position.x + this.sizeRaton/2, this.mouseCircular.position.y + this.sizeRaton/2, this.mouseCircular.position.x, this.mouseCircular.position.y - this.sizeRaton/2);     
       }
       else
       {
-        s.ellipse(s.mouseX, s.mouseY, this.sizeRaton, this.sizeRaton);
+        s.ellipse(this.mouseCircular.position.x, this.mouseCircular.position.y, this.sizeRaton, this.sizeRaton);
       }
 
-    for(let j = 0;j<this.particles.length;j++){
-    this.particles[j].createParticle();
-    this.particles[j].moveParticle();
-    this.particles[j].repulse();
-    this.particles[j].joinParticles(this.particles.slice(j));
-    this.contiene = this.Liquido.contains(this.particles[j].getPosx(),this.particles[j].getPosy());
-    if(this.contiene == true)
-      this.particles[j].setForce();
+       ;
 
+       let eliminados = 0;
+    for(let j = 0;j<this.particles.length;j++){
+      
+      this.particles[j].dibujaParticula(this.particulasMundo[j].position.x,this.particulasMundo[j].position.y);
+      this.particles[j].joinParticles(this.particulasMundo[j].position,this.particulasMundo);
+      if(this.particles[j].moveParticle(this.particulasMundo[j].position.x,this.particulasMundo[j].position.y))
+      {
+        matter.World.remove(this.world,this.particulasMundo[j]);
+        this.particulasMundo.splice(j,1);
+        this.particles.splice(j,1);
+        j--;   
+        eliminados++;
+        
+
+      }
    }
+   console.log(this.particulasMundo.length);
+    for(let j = 0;j<eliminados;j++){
+
+        this.particles.push(new Particle(s));
+        this.particulasMundo.push(this.particles[this.particles.length-1].createParticle());
+        matter.World.add(this.world,this.particulasMundo[this.particulasMundo.length-1]);
+        this.Body.applyForce( this.particulasMundo[this.particulasMundo.length-1], {x: this.particulasMundo[this.particulasMundo.length-1].position.x, y: this.particulasMundo[this.particulasMundo.length-1].position.y}, {x: s.random(-0.001,0.001), y: s.random(-0.001,0.001)});
+
+    }
+
+    eliminados = 0;
 
       };
 
