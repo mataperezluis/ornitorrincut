@@ -98,12 +98,18 @@ export class HeaderComponent implements OnInit {
       s.draw = () => {
       s.background(5,25,36);
       //s.fill('#ED225D');
-      s.textStyle(s.ITALIC);
-      s.textSize(s.windowWidth/28);
-      s.text(this.st, s.windowWidth/11, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
+      //s.textStyle(s.ITALIC);
+      //s.textSize(s.windowWidth/28);
+      //s.text(this.st, s.windowWidth/11, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
+      //s.textStyle(s.NORMAL);
+      //s.textSize(s.windowWidth/30);
+      //s.text(this.st2, (s.windowWidth/9)*3, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
+
       s.textStyle(s.NORMAL);
-      s.textSize(s.windowWidth/30);
-      s.text(this.st2, (s.windowWidth/9)*3, s.windowHeight - s.windowHeight/2, s.windowWidth, s.windowHeight); // Text wraps within text box
+      s.textSize(s.windowWidth/20);
+      s.text(this.st2, s.windowWidth/12, s.windowHeight - s.windowHeight/2 + s.windowHeight/9, s.windowWidth, s.windowHeight); // Text wraps within text box
+
+
 
       s.imageMode(s.CENTER);
       s.image(this.imgOrnitorrincut, s.windowWidth/2, s.windowHeight/4,this.scala*s.windowWidth, this.scala*this.imgOrnitorrincut.height*s.windowWidth/this.imgOrnitorrincut.width);
