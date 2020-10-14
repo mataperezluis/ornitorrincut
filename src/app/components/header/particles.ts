@@ -42,13 +42,13 @@ export class Particle {
       this.particleBodie = matter.Bodies.rectangle(this.x,this.y,this.r,this.r,{
         collisionFilter: {
             mask: 0x0001
-        }});
+        }, className:"cuadrado", width:this.r });
     }else
     {
       this.particleBodie  = matter.Bodies.circle(this.x,this.y,this.r,{
         collisionFilter: {
             mask: 0x0001
-        }});
+        }, className:"circulo", width:this.r});
     }
 
     this.particleBodie.friction = 0;
@@ -76,7 +76,7 @@ export class Particle {
   moveParticle(valX:number,valY:number) {
 
     var salida = false;
-    if((valX < -200 || valX > this._p5.width+200) || (valY < -200 || valY > this.altura+200))
+    if((valX < -60 || valX > this._p5.width+60) || (valY < -60 || valY > this.alturaSegunda+200))
       salida = true;
       
     return salida;
@@ -118,7 +118,22 @@ export class Particle {
       let dis = this._p5.dist(particulaActual.x,particulaActual.y,element.position.x,element.position.y);
       if(dis<180) {
         this._p5.stroke('rgba(250,247,247,0.7)');
-        this._p5.line(particulaActual.x,particulaActual.y,element.position.x,element.position.y);
+        if(element.className == "cuadrado"  && this.shapeT > 0)
+        { 
+          this._p5.line(particulaActual.x+this.r/2,particulaActual.y+this.r/2,element.position.x+element.width/2,element.position.y+element.width/2);
+        }
+        else if(element.className == "circulo" && this.shapeT > 0)
+        {
+          this._p5.line(particulaActual.x+this.r/2,particulaActual.y+this.r/2,element.position.x,element.position.y);
+         
+        }
+        else if(element.className == "cuadrado"  && this.shapeT < 0)
+        {
+          this._p5.line(particulaActual.x,particulaActual.y,element.position.x+element.width/2,element.position.y+element.width/2); 
+        }
+        else{
+          this._p5.line(particulaActual.x,particulaActual.y,element.position.x,element.position.y);
+        }
       }
     });
   }

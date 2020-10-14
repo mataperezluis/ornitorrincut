@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef , HostListener , AfterViewInit} from '@angular/core';
 import p5 from "p5";
 import {Particle} from './particles'
-import {Liquid} from './Liquid'
 import jump from 'jump.js';
 import { ServicioService } from '../../servicio.service';
 import * as matter from 'matter-js';
@@ -65,9 +64,6 @@ export class HeaderComponent implements OnInit {
         canvas2.position(0,0);
         canvas2.style("z-index : 1");
         s.background(5,25,36);
-         // Create liquid object
-        this.Liquido = new Liquid(s,s.windowWidth/2, s.windowHeight - s.windowHeight / 4, 
-          s.windowWidth/16, s.windowHeight / 4, 0.02);
 
         this.Engine = matter.Engine.create('sketch-holder');
         this.world = this.Engine.world;
@@ -112,8 +108,6 @@ export class HeaderComponent implements OnInit {
       s.imageMode(s.CENTER);
       s.image(this.imgOrnitorrincut, s.windowWidth/2, s.windowHeight/4,this.scala*s.windowWidth, this.scala*this.imgOrnitorrincut.height*s.windowWidth/this.imgOrnitorrincut.width);
 
-     // this.Liquido.display();
-
      this.mouseCircular.position.x = s.mouseX;
      this.mouseCircular.position.y = s.mouseY;
       
@@ -144,7 +138,7 @@ export class HeaderComponent implements OnInit {
 
       }
    }
-   console.log(this.particulasMundo.length);
+  
     for(let j = 0;j<eliminados;j++){
 
         this.particles.push(new Particle(s));
